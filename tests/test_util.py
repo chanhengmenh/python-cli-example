@@ -1,8 +1,25 @@
-# tests/test_util.py
+from blkpy import util
+import subprocess
+import json
 
-from blkpy.util import run_lsblk
+def test_run_lsblk_mock(monkeypatch):
+    mock_output = json.dumps({
+        "blockdevices": [
+            {
+                "name": "sda", "size": "100G", "type": "disk", "mountpoint": None,
+                "children": [
+                    {"name": "sda1", "size": "100G", "type": "part", "mountpoint": "/"}
+                ]
+            }
+        ]
+    }).encode('utf-8')
 
-def test_run_lsblk():
-    output = run_lsblk('sda')  # Replace 'sda' with a mock or test-safe device name
-    assert isinstance(output, str)
-    assert "sda" in output or "NAME" in output  # Loose check
+    def mock_check_output(cmd):
+        return mock_output
+
+    monkeypatch.setattr(subprocess, "check_output", mock_check_output)
+
+    result = util.run_lsblk('sda')
+    assert result['name'] == 'sda'
+    assert result['type'] == 'disk'
+
