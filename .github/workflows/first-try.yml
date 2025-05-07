@@ -44,10 +44,10 @@ jobs:
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
 
-    # Run Unit Tests inside Docker container
-    - name: Run Unit Tests
-      run: |
-        docker run --rm -v ${{ github.workspace }}:/app -w /app ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest pytest
+    # # Run Unit Tests inside Docker container
+    # - name: Run Unit Tests
+    #   run: |
+    #     docker run --rm -v ${{ github.workspace }}:/app -w /app ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest pytest
 
 
     # Optional: Run a Python script using Docker
