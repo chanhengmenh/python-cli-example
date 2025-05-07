@@ -22,11 +22,11 @@ jobs:
         file: .devcontainer/Dockerfile  # Update this line to point to the Dockerfile in the .devcontainer folder
         push: true
         tags: |
-          my-python-app:latest
-          my-python-app:${{ github.sha }}
+          ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest  # Include your Docker Hub username
+          ${{ secrets.DOCKER_USERNAME }}/my-python-app:${{ github.sha }}
 
     - name: Run Unit Tests
-      run: docker run my-python-app pytest
+      run: docker run ${{ secrets.DOCKER_USERNAME }}/my-python-app pytest
 
     - name: Run Python Script
       uses: jannekem/run-python-script-action@v1.7
