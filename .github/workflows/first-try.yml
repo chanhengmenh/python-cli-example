@@ -13,7 +13,7 @@ jobs:
       uses: docker/build-push-action@v6.16.0
       with:
         context: .
-        file: Dockerfile
+        file: .devcontainer/Dockerfile  # Update this line to point to the Dockerfile in the .devcontainer folder
         push: true
         tags: |
           my-python-app:latest
