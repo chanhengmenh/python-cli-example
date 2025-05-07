@@ -47,7 +47,8 @@ jobs:
     # Run Unit Tests inside Docker container
     - name: Run Unit Tests
       run: |
-        docker run --rm ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest pytest
+        docker run --rm -v ${{ github.workspace }}:/app -w /app ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest pytest
+
 
     # Optional: Run a Python script using Docker
     - name: Run Python Script
